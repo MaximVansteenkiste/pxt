@@ -87,6 +87,8 @@ export class Projects extends auth.Component<ISettingsProps, ProjectsState> {
     }
 
     chgHeader(hdr: pxt.workspace.Header) {
+        //Hierin
+        console.log({hdr})
         pxt.tickEvent("projects.header");
         core.showLoading("changeheader", lf("loading..."));
         this.props.parent.loadHeaderAsync(hdr)
@@ -655,14 +657,16 @@ export class ProjectsCarousel extends data.Component<ProjectsCarouselProps, Proj
     }
 
     handleCardClick(e: any, scr: pxt.CodeCard, index?: number) {
+        console.log({scr})
         const { name } = this.props;
         if (this.props.setSelected && !(scr && scr.directOpen)) {
             // Set this item as selected
             pxt.tickEvent("projects.detail.open", {
                 name: scr?.name, url: scr?.url, cardType: scr?.cardType, editor: scr?.editor
             }, { interactiveConsent: true });
-            this.props.setSelected(name, index);
+             this.props.setSelected(name, index);
         } else {
+            console.log("We gaan hierin")
             this.props.onClick(scr);
         }
     }

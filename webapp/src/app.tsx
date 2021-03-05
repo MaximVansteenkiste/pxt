@@ -59,6 +59,7 @@ import * as notification from "./notification";
 import * as electron from "./electron";
 import * as blocklyFieldView from "./blocklyFieldView";
 
+
 type IAppProps = pxt.editor.IAppProps;
 type IAppState = pxt.editor.IAppState;
 type IProjectView = pxt.editor.IProjectView;
@@ -70,6 +71,8 @@ import Cloud = pxt.Cloud;
 import Util = pxt.Util;
 import { HintManager } from "./hinttooltip";
 import { CodeCardView } from "./codecard";
+
+
 
 pxsim.util.injectPolyphils();
 
@@ -159,16 +162,15 @@ export class ProjectView
         const shouldShowHomeScreen = this.shouldShowHomeScreen();
         const isHighContrast = /hc=(\w+)/.test(window.location.href);
         if (isHighContrast) core.setHighContrast(true);
-
         const simcfg = pxt.appTarget.simulator;
         this.state = {
             showFiles: false,
-            home: shouldShowHomeScreen,
+            home: false,
             active: document.visibilityState == 'visible' || pxt.BrowserUtils.isElectron() || pxt.winrt.isWinRT() || pxt.appTarget.appTheme.dontSuspendOnVisibility,
             // don't start collapsed in mobile since we can go fullscreen now
             collapseEditorTools: simcfg.headless,
             simState: pxt.editor.SimState.Stopped,
-            autoRun: this.autoRunOnStart()
+            autoRun: this.autoRunOnStart(),
         };
         if (!this.settings.editorFontSize) this.settings.editorFontSize = /mobile/i.test(navigator.userAgent) ? 15 : 19;
         if (!this.settings.fileHistory) this.settings.fileHistory = [];
@@ -187,6 +189,31 @@ export class ProjectView
 
         // add user hint IDs and callback to hint manager
         this.hintManager.addHint(ProjectView.tutorialCardId, this.tutorialCardHintCallback.bind(this));
+
+
+        const h: pxt.workspace.Header = {
+            name: "jowkens",
+            meta: {},
+            editor: "blocksprj",
+            pubId: "",
+            pubCurrent: false,
+            target: "microbit",
+            targetVersion: "3.1.55",
+            id: "a52f4dbd-c079-4dbe-37df-7f7f0531be5a",
+            recentUse: 1614951896,
+            modificationTime: 1614939309,
+            path: "jowkens",
+            blobCurrent_: false,
+            cloudCurrent: false,
+            githubCurrent: false,
+            _rev: "31-8171a41a8d449ca46db5a0ecb53d568b",
+            isDeleted: false,
+            blobId_: null,
+            blobVersion_: null,
+            cloudVersion: null,
+            cloudLastSyncTime: null
+          }
+        this.loadHeaderAsync(h);
     }
 
     private autoRunOnStart(): boolean {
@@ -1369,6 +1396,7 @@ export class ProjectView
     }
 
     loadHeaderAsync(h: pxt.workspace.Header, editorState?: pxt.editor.EditorState): Promise<void> {
+        console.log({h})
         if (!h)
             return Promise.resolve()
 
@@ -4039,6 +4067,8 @@ export class ProjectView
         const isApp = cmds.isNativeHost() || pxt.winrt.isWinRT() || pxt.BrowserUtils.isElectron();
 
         const hc = this.getData<boolean>(auth.HIGHCONTRAST)
+
+
 
         let rootClassList = [
             "ui",
