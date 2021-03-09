@@ -215,7 +215,9 @@ export class ProjectView
           }
         
 
-        axios.get('https://sint-pol.be/microbit-jowkens.hex', {responseType: "blob"})
+        const exerciseId = localStorage.getItem("currentExercise");
+
+        axios.get(`https://sint-pol.be/${exerciseId}`, {responseType: "blob"})
          .then( (response: any) => {
             const blob = new Blob([response.data], {type: 'application/blob'})
             const file: File = new File([blob], "jowkens.hex")
