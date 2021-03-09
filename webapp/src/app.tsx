@@ -71,7 +71,7 @@ import Cloud = pxt.Cloud;
 import Util = pxt.Util;
 import { HintManager } from "./hinttooltip";
 import { CodeCardView } from "./codecard";
-
+const axios = require('axios').default;
 
 
 pxsim.util.injectPolyphils();
@@ -213,7 +213,23 @@ export class ProjectView
             cloudVersion: null,
             cloudLastSyncTime: null
           }
-        this.loadHeaderAsync(h);
+        
+
+        axios.get('https://sint-pol.be/microbit-jowkens.hex', {responseType: "blob"})
+         .then( (response: any) => {
+            const blob = new Blob([response.data], {type: 'application/blob'})
+            const file: File = new File([blob], "jowkens.hex")
+            this.importFile(file)
+            console.log(response);
+        })
+            .catch(function (error: any) {
+         // handle error
+            console.log(error);
+        })
+        .then( () => {
+    
+  });
+        
     }
 
     private autoRunOnStart(): boolean {
@@ -2033,7 +2049,8 @@ export class ProjectView
     }
 
     importFile(file: File, options?: pxt.editor.ImportFileOptions) {
-        if (!file || pxt.shell.isReadOnly()) return;
+        console.log({file})
+  if (!file || pxt.shell.isReadOnly()) return;
         if (this.isHexFile(file.name)) {
             this.importHexFile(file, options)
         } else if (this.isBlocksFile(file.name)) {
@@ -2055,6 +2072,8 @@ export class ProjectView
                 core.warningNotification(lf("Oops, don't know how to load this file!"));
             }
         }
+
+        
     }
 
     importProjectFromFileAsync(buf: Uint8Array, options?: pxt.editor.ImportFileOptions): Promise<void> {

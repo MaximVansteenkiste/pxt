@@ -1370,6 +1370,7 @@ export class NewProjectDialog extends data.Component<ISettingsProps, NewProjectD
     promptUserAsync() {
         this.show();
         return new Promise<pxt.editor.ProjectCreationOptions>(resolve => {
+            console.log({resolve})
             this.createProjectCb = resolve;
         });
     }
