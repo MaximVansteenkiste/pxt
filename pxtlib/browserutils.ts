@@ -1,11 +1,7 @@
 namespace pxt.BrowserUtils {
 
     export function isIFrame(): boolean {
-        try {
-            return window && window.self !== window.top;
-        } catch (e) {
-            return true;
-        }
+        return false;
     }
 
     export function hasNavigator(): boolean {

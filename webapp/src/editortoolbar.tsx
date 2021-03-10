@@ -314,7 +314,7 @@ export class EditorToolbar extends data.Component<ISettingsProps, {}> {
                 <div id="projectNameArea" role="menu" className="ui column items">
                     <div className={`ui right ${showSave ? "labeled" : ""} input projectname-input projectname-computer`}>
                         {showProjectRename && this.getSaveInput(showSave, "fileNameInput2", projectName, showProjectRenameReadonly)}
-                        {showGithub && <githubbutton.GithubButton parent={this.props.parent} key={`githubbtn${computer}`} />}
+                        {false && <githubbutton.GithubButton parent={this.props.parent} key={`githubbtn${computer}`} />}
                 </div>
                 {/* TODO: consider make this cloud state indicator a seperate React component so we don't need to update
                     the whole toolbar when there are cloud state changes. However so far, this doesn't seem to be a

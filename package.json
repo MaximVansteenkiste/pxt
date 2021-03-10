@@ -58,7 +58,6 @@
   },
   "dependencies": {
     "applicationinsights-js": "^1.0.20",
-    "axios": "^0.21.1",
     "bluebird": "3.5.1",
     "browserify": "16.2.0",
     "chai": "^3.5.0",

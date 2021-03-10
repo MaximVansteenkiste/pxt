@@ -71,7 +71,6 @@ import Cloud = pxt.Cloud;
 import Util = pxt.Util;
 import { HintManager } from "./hinttooltip";
 import { CodeCardView } from "./codecard";
-const axios = require('axios').default;
 
 
 pxsim.util.injectPolyphils();
@@ -191,46 +190,13 @@ export class ProjectView
         this.hintManager.addHint(ProjectView.tutorialCardId, this.tutorialCardHintCallback.bind(this));
 
 
-        const h: pxt.workspace.Header = {
-            name: "jowkens",
-            meta: {},
-            editor: "blocksprj",
-            pubId: "",
-            pubCurrent: false,
-            target: "microbit",
-            targetVersion: "3.1.55",
-            id: "a52f4dbd-c079-4dbe-37df-7f7f0531be5a",
-            recentUse: 1614951896,
-            modificationTime: 1614939309,
-            path: "jowkens",
-            blobCurrent_: false,
-            cloudCurrent: false,
-            githubCurrent: false,
-            _rev: "31-8171a41a8d449ca46db5a0ecb53d568b",
-            isDeleted: false,
-            blobId_: null,
-            blobVersion_: null,
-            cloudVersion: null,
-            cloudLastSyncTime: null
-          }
         
 
-        const exerciseId = localStorage.getItem("currentExercise");
+        const exerciseData = sessionStorage.getItem("currentMicroBitExercise");
 
-        axios.get(`https://sint-pol.be/${exerciseId}`, {responseType: "blob"})
-         .then( (response: any) => {
-            const blob = new Blob([response.data], {type: 'application/blob'})
-            const file: File = new File([blob], "jowkens.hex")
-            this.importFile(file)
-            console.log(response);
-        })
-            .catch(function (error: any) {
-         // handle error
-            console.log(error);
-        })
-        .then( () => {
-    
-  });
+        const blob = new Blob([exerciseData], {type: 'application/blob'})
+        const file: File = new File([blob], "ex.hex")
+        this.importFile(file)
         
     }
 
@@ -339,7 +305,7 @@ export class ProjectView
 
     shouldShowHomeScreen() {
         const hash = parseHash();
-        const isSandbox = pxt.shell.isSandboxMode() || pxt.shell.isReadOnly();
+        const isSandbox = false;
         // Only show the start screen if there are no initial projects requested
         // (e.g. from the URL hash or from WinRT activation arguments)
         const skipStartScreen = pxt.appTarget.appTheme.allowParentController

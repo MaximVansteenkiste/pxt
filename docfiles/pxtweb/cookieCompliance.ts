@@ -243,11 +243,7 @@ namespace pxt {
         return noCookieBanner;
     }
     function isIFrame(): boolean {
-        try {
-            return window && window.self !== window.top;
-        } catch (e) {
-            return false;
-        }
+        return false;
     }
     function isNotHosted(): boolean {
         // If local serve, config will not exist. If served statically, we check the flag in the config
